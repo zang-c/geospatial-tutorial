@@ -189,7 +189,7 @@ Let's open a timeseries seaice concentration file!
     We need to get our timeseries as a series of datetime objects
     then we need to inform the computer what the projection (CRS) of this data is (this sea ice data is in North Polar Stereographic a.k.a. 'EPSG:3413'
 '''
-seaice = xr.open_dataset(r"E:\misc-projects\group-meetings\geospatial_tutorial\seaice.nc")
+seaice = xr.open_dataset(r"../data-out/seaice.nc", engine = 'netcdf4')
 seaice['time'] = pd.to_datetime(seaice.time, format = '%Y%m%d')
 seaice = seaice.z.rio.write_crs("EPSG:3413")
 
@@ -210,7 +210,7 @@ new_coords = [(lon1, lat1),
 new = Polygon(new_coords)
 gdf = geopandas.GeoDataFrame(geometry=[new], crs="EPSG:4326")
 gdf = gdf.to_crs('EPSG:3413')
-new_outfile_path = r'E:\misc-projects\group-meetings\geospatial_tutorial\new-polynya.shp'
+new_outfile_path = r'../data-out/new-polynya.shp'
 gdf.to_file(new_outfile_path)
 
 '''
@@ -230,7 +230,7 @@ fram = Polygon(fram_coords)
 fram = fram - new
 gdf = geopandas.GeoDataFrame(geometry=[fram], crs="EPSG:4326")
 gdf = gdf.to_crs('EPSG:3413')
-fram_outfile_path = r'E:\misc-projects\group-meetings\geospatial_tutorial\fram-strait.shp'
+fram_outfile_path = r'../data-out/fram-strait.shp'
 gdf.to_file(fram_outfile_path)
 
 '''
@@ -246,7 +246,7 @@ arctic = Polygon(circle_points)
 gdf = geopandas.GeoDataFrame(geometry=[arctic], 
                              crs="EPSG:4326")
 gdf = gdf.to_crs('EPSG:3413')
-arctic_outfile_path = r'E:\misc-projects\group-meetings\geospatial_tutorial\arctic.shp'
+arctic_outfile_path = r'../data-out/arctic.shp'
 gdf.to_file(arctic_outfile_path)
 #%% Reload the the shapefiles and pull seaice concentration data associated with each shapes region
 '''
